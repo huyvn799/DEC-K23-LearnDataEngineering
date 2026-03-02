@@ -1,8 +1,0 @@
-Date,ID,Customer,Type,Amount,Status
-2/10/25,101,Nguyen_Van_A,Transfer,5000000,Success
-12/5/24,102,Tran_Thi_B,Withdraw,2000000,Pending
-1/25/26,103,Le_Van_C,Transfer,60000000,Success
-9/2/25,104,Pham_Minh_D,Deposit,15000000,Success
-11/15/25,105,Hoang_Anh_E,Transfer,500000,Failed
-6/8/24,106,Vu_Thi_F,Withdraw,100000000,Success
-10/20/25,107,Do_Gia_G,Transfer,25000000,Pending
