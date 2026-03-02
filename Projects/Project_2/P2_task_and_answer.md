@@ -11,10 +11,10 @@ pip install venv
 cd Projects/Project_2
 python3 -m venv venv
 source venv/bin/activate
-pip install pandas requests beautifulsoup4 aiohttp aiofiles
+pip install pandas requests beautifulsoup4 aiohttp aiofiles lxml uvloop fake-useragent
 
 3. Chạy chương trình
-nohup python3 main.py >> crawl_tiki.log 2>&1 &
+nohup python3 -u main.py >> crawl_tiki.log 2>&1 &
 
 # Nội dung chương trình:
 - Semaphore(20) để tránh lỗi many requests và làm tràn bộ nhớ
