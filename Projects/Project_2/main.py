@@ -73,7 +73,7 @@ async def fetch_product(session, p_id):
     current_headers = get_random_headers() # Tạo header mới cho mỗi request
     async with sem:
         try:
-            # Thêm độ trễ ngẫu nhiên từ 0.5 đến 1.5 giây cho mỗi request
+            # Thêm độ trễ ngẫu nhiên từ 0.3 đến 1.0 giây cho mỗi request
             await asyncio.sleep(random.uniform(0.3, 1.0))
             
             async with session.get(url, headers=current_headers, timeout=20) as response:
