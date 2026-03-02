@@ -3,3 +3,13 @@
 
 # Ada Library Information
 *.ali
+
+# Folders
+venv/
+test/
+data/
+errors/
+
+# Test files
+*_test.*
+test*
