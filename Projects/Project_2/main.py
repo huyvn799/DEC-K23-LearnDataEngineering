@@ -15,7 +15,7 @@ INPUT_FILE = 'products-0-200000.csv'
 DATA_DIR = 'data'
 ERROR_FILE = 'errors/all_errors.csv'
 CHUNK_SIZE = 1000
-CONCURRENCY = 15
+CONCURRENCY = 30
 
 
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -74,9 +74,9 @@ async def fetch_product(session, p_id):
     async with sem:
         try:
             # Thêm độ trễ ngẫu nhiên từ 0.3 đến 1.0 giây cho mỗi request
-            await asyncio.sleep(random.uniform(0.3, 1.0))
+            await asyncio.sleep(random.uniform(0.1, 0.5))
             
-            async with session.get(url, headers=current_headers, timeout=20) as response:
+            async with session.get(url, headers=current_headers, timeout=15) as response:
                 status = response.status
                 if status == 200:
                     data = await response.json()
@@ -205,17 +205,17 @@ async def main():
             retry_codes = ['429', 'TimeoutError', 'ClientConnectorError', 'ServerDisconnectedError']
             if retry_round < 6: retry_codes.append('404')
             
-            ids_to_crawl = df_err[df_err['error_code'].isin(retry_codes)]['id'].tolist()
+            ids_to_crawl = df_err[df_err['error_code'].isin(retry_codes)]['id'].to_list()
 
             if ids_to_crawl:
                 # Trong hàm main(), đoạn tính wait_time:
                 # Logic tính toán wait_time giữa các Round
                 if retry_round == 1:
-                    wait_time = 30   # Sau Round 1, nếu có lỗi thì nghỉ 30s
+                    wait_time = 120   # Sau Round 1, nếu có lỗi thì nghỉ 30s
                 elif retry_round == 2:
-                    wait_time = 120  # Nếu vẫn còn lỗi, nghỉ hẳn 2 phút
+                    wait_time = 150  # Nếu vẫn còn lỗi, nghỉ hẳn 2 phút
                 else:
-                    wait_time = 300  # Từ Round 3 trở đi, nghỉ 5 phút để "tẩy trắng" IP trong mắt Tiki
+                    wait_time = 200  # Từ Round 3 trở đi, nghỉ 5 phút để "tẩy trắng" IP trong mắt Tiki
 
                 print(f"⚠️ Cần retry {len(ids_to_crawl)} lỗi")
                 print(f"⚠️ Nghỉ {wait_time}s... Chờ ROUND tiếp theo")
